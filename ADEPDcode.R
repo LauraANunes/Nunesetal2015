@@ -51,8 +51,11 @@ for(m in 1:nb.all){
   p <- p+2 #at every two steps (skip two sister pairs for next node)
 }
 
+c1 <- c1[complete.cases(c1)] #remove NAs
+c2 <- c1[complete.cases(c2)] #remove NAs
+parent <- c1[complete.cases(parent)] #remove NAs
+
 df<- cbind(c1,c2,parent)
-df <- df[complete.cases(df),] #remove NAs
 
 c1 <- as.vector(df[,1])
 c2 <- as.vector(df[,2])
