@@ -1,6 +1,4 @@
 
-## This code is assuming investigator wants to downlist all species in the tree, one at a time.
-
 library('phytools')
 library('ape')
 library('caper')
