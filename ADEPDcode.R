@@ -123,8 +123,8 @@ for(j in 1:length(downlist)){
 
 ADEPD.score<-adepd_epd-current_epd #ADEPD=ADEPD_epd - current_epd as the gain in EPD due to the downlisting
 
-res.frame <- data.frame(tips[downlist,1],adepd_epd,current_epd,ADEPD.score)  #species name, EPD of tree when species downlisted, EPD of tree with no downlisting, species ADEPD score
+res.frame <- data.frame(tips[downlist,1],pext[downlist],adepd_epd,current_epd,ADEPD.score)  #species name, EPD of tree when species downlisted, EPD of tree with no downlisting, species ADEPD score
 
-colnames(res.frame)<-c('species','ADEPD_EPD','CURRENT_EPD','ADEPD score')  #frame with species index and ADEPD not divided by costs. 
+colnames(res.frame)<-c('species','P(ext)','ADEPD_EPD','CURRENT_EPD','ADEPD score')  #frame with species index and ADEPD not divided by costs. 
 
 #then divide by costs to get ADEPD/cost score
