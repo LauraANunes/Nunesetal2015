@@ -15,8 +15,8 @@ colnames(tips)<-c('species','treeindex')
 
 mat<-clade.matrix(phy)
 brlen <- mat$edge.length #get branch lenghts in the same order as the p(ext) vector
-orphan <- nb.tips+1 ### indicate the basal branch (essentially nb.tips +1) this depends on whether the tree is rooted or unrooted.
 nb.tips <- max(phy$edge) - phy$Nnode #number of tips
+orphan <- nb.tips+1 ### indicate the basal branch (essentially nb.tips +1) this depends on whether the tree is rooted or unrooted.
 nb.nodes <- phy$Nnode #number of nodes
 nb.all <- nb.tips + nb.nodes #nodes+tips
 
