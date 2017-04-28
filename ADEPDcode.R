@@ -90,7 +90,7 @@ current_epd<- sum(as.numeric(current_per)) #current EXPECTED PHYLOGENETIC DIVERS
 level_ext<- c(0.00005,0.004,0.05,0.42,0.97,1) #probabilities of extinction according to IUCN50
 adepd_epd <- rep(NA,nb.species)#number of species to downlist
 
-downlist<-which(pext>0.00005)  #species to downlist
+downlist<-which(pext>0.00005)  #species to downlist --removes LC species, as they cannot be downlisted any further
 runs <- c(1:length(downlist)) #1:number of species to downlist
 
 for(j in 1:length(downlist)){
