@@ -66,6 +66,7 @@ parent <- as.vector(df[,3])
 
 
 ##current_epd == EDP with no downlisting 
+pext<-pext[,2]  ###just column with pext values
 parent_pext <- rep(NA,nb.nodes) ## at the moment is NA, will be recalculated next
 all_pext <- c(pext,parent_pext) 
 
@@ -89,14 +90,17 @@ current_epd<- sum(as.numeric(current_per)) #current EXPECTED PHYLOGENETIC DIVERS
 
 
 level_ext<- c(0.00005,0.004,0.05,0.42,0.97,1) #probabilities of extinction according to IUCN50
-runs <- c(1:nb.species) #1:number of species to downlist
 adepd_epd <- rep(NA,nb.species)#number of species to downlist
 
-for(j in 1:nb.species){
+downlist<-which(pext>0.00005)  #species to downlist
+runs <- c(1:length(downlist)) #1:number of species to downlist
+
+for(j in 1:length(downlist)){
   cat(paste('',runs[j],'-m.  ',sep=''))
+  
   ## use treeindex to locate where the species you want to downlist is located in the tree
   ## to downlist, you are moving the p(ext) one position below, there -1
-  pext[j]<-level_ext[which(level_ext==pext[j])-1] #change the pext of species j to a lower level of extinction risk (level_ext)
+  pext[downlist[j]]<-level_ext[which(level_ext==pext[downlist[j]])-1] #change the pext of species j to a lower level of extinction risk (level_ext)
   parent_pext <- rep(NA,nb.nodes)
   all_pext <- c(pext,parent_pext) #now recalculate all pext given change in pext[j]
   for(i in orphan:nb.all){
@@ -116,13 +120,13 @@ for(j in 1:nb.species){
   ##make sure basal branch had p(ext) of 0.00
   
   adepd_epd[j]<- sum(as.numeric(adepd.per)) # EXPECTED PHYLOGENETIC DIVERSITY when species j is downlisted
-  pext[j]<-level_ext[which(level_ext==pext[j])+1] #restore to original leveo of extinction risk of species 
+  pext[downlist[j]]<-level_ext[which(level_ext==pext[downlist[j]])+1] #restore to original leveo of extinction risk of species 
 }
 
 ADEPD.score<-adepd_epd-current_epd #ADEPD=ADEPD_epd - current_epd as the gain in EPD due to the downlisting
 
-res.frame <- data.frame(tips,adepd_epd,current_epd,ADEPD)  #species name, EPD of tree when species downlisted, EPD of tree with no downlisting, species ADEPD score
+res.frame <- data.frame(tips[downlist,1],adepd_epd,current_epd,ADEPD.score)  #species name, EPD of tree when species downlisted, EPD of tree with no downlisting, species ADEPD score
 
-colnames(res.frame)<-c('species','ADEPD_EPD','CURRENT_EPD','ADEPD')  #frame with species index and ADEPD not divided by costs. 
+colnames(res.frame)<-c('species','ADEPD_EPD','CURRENT_EPD','ADEPD score')  #frame with species index and ADEPD not divided by costs. 
 
 #then divide by costs to get ADEPD/cost score
