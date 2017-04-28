@@ -9,7 +9,7 @@ pext<-read.csv() #probabily of extinction of each species in the same order as t
 phy<-read.tree('.tre') #get tree
 tips<-phy$tip.label #extrat tip column 
 tips<-data.frame(tips,c(1:length(tips))) #attribute index to locate species in the tree
-nb.species<-nrow(tips) #nrow(tips) == number of species in the tree
+nb.species<-length(tips) #length(tips) == number of species in the tree
 
 colnames(tips)<-c('species','treeindex')
 
